@@ -72,3 +72,113 @@
         </div>
     </div>
 </div>
+
+<!-- Delete Modal-->
+<div class="modal" id="delModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Delete User</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <form id="delForm" enctype="multipart/form-data">
+                        @csrf
+                        <h2>Are you sure to delete this <span id="delUser"></span> user?</h2>
+                        <input type="hidden" id="delid">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Modal -->
+<div class="modal" id="editModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit User</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <form id="editForm" enctype="multipart/form-data">
+                        @csrf
+                        <input type="hidden" id="editid">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <label>Name:</label>
+                            </div>
+                            <div class="col-sm-9">
+                                <input type="text" name="name" id="name" placeholder="Enter your Name"
+                                    class="form-control">
+                            </div>
+                        </div>
+                        <div style="margin-top: 10px;"></div>
+
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <label>Email:</label>
+                            </div>
+                            <div class="col-sm-9">
+                                <input type="email" name="email" id="email" placeholder="Enter your email"
+                                    class="form-control">
+                            </div>
+                        </div>
+                        <div style="margin-top: 10px;"></div>
+
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <label>Mobile:</label>
+                            </div>
+                            <div class="col-sm-9">
+                                <input type="text" name="mobile" id="mobile" placeholder="Enter your mobile"
+                                    class="form-control" pattern="[1-9][0-9]{9}"
+                                    title="Enter valid 10 digit mobile number">
+                            </div>
+                        </div>
+                        <div style="margin-top: 10px;"></div>
+
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <label>Image:</label>
+                            </div>
+                            <div class="col-sm-9">
+                                <div>
+                                    <img src="" id="imagePreview" width="60" height="60">
+                                </div>
+                                <input type="file" name="image" class="form-control" style="margin-top: 5px;">
+                            </div>
+                        </div>
+                        <div style="margin-top: 10px;"></div>
+
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <label>Description:</label>
+                            </div>
+                            <div class="col-sm-9">
+                                <textarea name="description" id="description" class="form-control"></textarea>
+                            </div>
+                        </div>
+                        <div style="margin-top: 10px;"></div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Edit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

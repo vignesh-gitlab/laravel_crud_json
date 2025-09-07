@@ -54,12 +54,17 @@ class UserJsonController extends Controller
             'description' => 'required'
         ]);
         $users = $this->readJson();
+        $maxId = 0;
+        if (!empty($users)) {
+            $maxId = max(array_column($users, 'id'));
+        }
+
         $imagePath = null;
         if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->store('uploads', 'public');
         }
         $newUser = [
-            'id' => count($users) + 1,
+            'id' => $maxId + 1,
             'name' => $validated['name'],
             'email' => $validated['email'],
             'mobile' => $validated['mobile'],
@@ -70,6 +75,50 @@ class UserJsonController extends Controller
         $this->writeJson($users);
         return response()->json(['status' => 'success', 'message' => "User Created"]);
     }
+
+    public function getUserDetail($id)
+    {
+        $users = $this->readJson();
+        $user = collect($users)->firstWhere('id', (int)$id);
+        if (!$user) {
+            return response()->json(['status' => 'error', 'message' => 'Error in get User']);
+        }
+        return response()->json(['status' => 'success', 'user' => $user]);
+    }
+
+
+    public function deleteUser($id)
+    {
+        $users = $this->readJson();
+        $users = collect($users)->reject(function ($u) use ($id) {
+            return $u['id'] == (int) $id;
+        })->values()->all();
+        $this->writeJson($users);
+        return response()->json(['status' => 'success', 'message' => 'Deleted Successfully']);
+    }
+
+    public function editUser($id, Request $request)
+    {
+        $users = $this->readJson();
+        $index = collect($users)->search(function ($u) use ($id) {
+            return $u['id'] == (int) $id;
+        });
+
+        if ($index === false) {
+            return response()->json(['status' => 'error', 'message' => 'User Not Found']);
+        }
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('uploads', 'public');
+            $users[$index]['image'] = $imagePath;
+        }
+        $users[$index]['name'] = $request->name;
+        $users[$index]['email'] = $request->email;
+        $users[$index]['mobile'] = $request->mobile;
+        $users[$index]['description'] = $request->description;
+        $this->writeJson($users);
+        return response()->json(['status' => 'success', 'message' => 'User updated successfully']);
+    }
+
 
     private function readJson()
     {

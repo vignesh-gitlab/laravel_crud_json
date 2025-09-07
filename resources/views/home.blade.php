@@ -78,6 +78,108 @@
             }
         });
     });
+
+    $(document).on('click', '.delete', function() {
+        var id = $(this).data('id');
+
+        $.ajax({
+            url: '/getUserDetail/' + id,
+            type: 'GET',
+            data: {
+                id: id
+            },
+            dataType: 'json',
+            success: function(response) {
+                if (response.status == 'success') {
+                    $('#delModal').modal('show');
+                    $('#delUser').text(response.user.name);
+                    $('#delid').val(response.user.id);
+                } else {
+                    alert("Error in get user");
+                }
+            }
+        });
+    });
+
+    $('#delForm').on('submit', function(e) {
+        e.preventDefault();
+        var id = $('#delid').val();
+        var formData = new FormData(this);
+
+        $.ajax({
+            url: '/deleteUser/' + id,
+            type: 'POST',
+            data: formData,
+            contentType: false,
+            processData: false,
+            dataType: 'json',
+            success: function(response) {
+                if (response.status == 'success') {
+                    alert(response.message);
+                    $('#delModal').modal('hide');
+                    loadUserTable();
+                } else {
+                    alert(response.message);
+                }
+            }
+        });
+    });
+
+
+    $(document).on('click', '.edit', function() {
+        var id = $(this).data('id');
+
+        $.ajax({
+            url: '/getUserDetail/' + id,
+            type: 'GET',
+            data: {
+                id: id
+            },
+            dataType: 'json',
+            success: function(response) {
+                if (response.status == 'success') {
+                    var user = response.user;
+                    $('#editid').val(user.id);
+                    $('#name').val(user.name);
+                    $('#email').val(user.email);
+                    $('#mobile').val(user.mobile);
+                    $('#editForm input[type="file"]').val('');
+                    if (user.image == '') {
+                        $('#imagePreview').attr('src', '');
+                    } else {
+                        var basePath = '{{asset("storage")}}/';
+                        $('#imagePreview').attr('src', basePath + user.image);
+                    }
+                    $('#description').val(user.description);
+                    $('#editModal').modal('show');
+                }
+            }
+        });
+    });
+
+    $('#editForm').on('submit', function(e) {
+        e.preventDefault();
+        var id = $('#editid').val();
+        var formData = new FormData(this);
+
+        $.ajax({
+            url: '/editUser/' + id,
+            type: 'POST',
+            data: formData,
+            contentType: false,
+            processData: false,
+            dataType: 'json',
+            success: function(response) {
+                if (response.status == 'success') {
+                    alert(response.message);
+                    $('#editModal').modal('hide');
+                    loadUserTable();
+                } else {
+                    alert(response.message);
+                }
+            }
+        });
+    });
     </script>
 </body>
 

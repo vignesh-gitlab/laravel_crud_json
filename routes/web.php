@@ -19,3 +19,6 @@ Route::get('/', function () {
 });
 Route::get('/getUsers', [UserJsonController::class, 'getUsers']);
 Route::post('/createUser', [UserJsonController::class, 'createUser']);
+Route::get('/getUserDetail/{id}', [UserJsonController::class, 'getUserDetail']);
+Route::post('/deleteUser/{id}', [UserJsonController::class, 'deleteUser']);
+Route::post('/editUser/{id}', [UserJsonController::class, 'editUser']);
