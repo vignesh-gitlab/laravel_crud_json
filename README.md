@@ -1,3 +1,20 @@
+composer create-project laravel/laravel laravel_crud_json
+php artisan make:controller user
+php artisan migrate
+php artisan storage:link (for uploading image stored in folder:laravel_crud_json\storage\app\public\uploads)
+
+
+
+git command:
+
+git init
+git add README.md
+git commit -m "first commit"
+git remote add origin https://github.com/vignesh-gitlab/laravel_crud_json.git
+git remote set-url origin git@github.com:vignesh-gitlab/laravel_crud_json.git
+git push -u origin master
+
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
 
 <p align="center">
